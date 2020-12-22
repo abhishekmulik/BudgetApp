@@ -3,10 +3,9 @@ var budgetController=(function(){
         
 })();
 
-
 //UI controller
 var UIController=(function(){
-    
+   
     var DOMstrings={
         inputType:'.add__type',
         inputDescription:'.add__description',
@@ -31,12 +30,22 @@ var UIController=(function(){
 //Global App controller
 var controller=(function(budgetCtrl,UICtrl){
     
-    var DOM=UICtrl.getDomstrings();
+    var setupEventListeners=function() {
+        var DOM=UICtrl.getDomstrings();
+
+        document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
+
+        document.addEventListener('keypress',function (event){
+        if (event.keyCode===13 ||event.which===13){
+            ctrlAddItem();
+        }
+        });
+    };
 
     var ctrlAddItem = function(){
         //1 get field input data 
         var input=UICtrl.getinput();
-        console.log(input)
+    
         //2 add the item to budget to budget controller
 
         //3. add the item to UI 
@@ -44,13 +53,15 @@ var controller=(function(budgetCtrl,UICtrl){
         //4. calc the budegt
 
         //5.display the budget on /ui
+        
+    };
 
-    } 
-    document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem);
-
-    document.addEventListener('keypress',function(event){
-        if (event.keyCode===13 ||event.which===13){
-            ctrlAddItem();
+    return{
+        init: function(){
+            console.log('appli has started');
+            setupEventListeners();
         }
-    });
+    }
+
 })(budgetController,UIController);
+controller.init();
