@@ -76,6 +76,7 @@ var UIController=(function(){
           description : document.querySelector(DOMstrings.inputDescription).value,
           value : document.querySelector(DOMstrings.inputValue).value,
           };
+          
       }, 
 
       addListItem: function(obj,type){
