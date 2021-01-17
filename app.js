@@ -44,8 +44,6 @@ var budgetController=(function(){
                 }else{
                     ID=0;
                 }
-                
-
                 //recreate new item based on inc or exp
                 if (type==='exp'){
                     newItem=new Expense(ID,des,val);
@@ -58,7 +56,23 @@ var budgetController=(function(){
                 
                 //return the new elemnt
                 return newItem;
+ 
+            },
 
+            deleteItem: function(type, id){
+                var ids,index;
+                //id=6
+                //data.allItems[type][id];
+                //ids=[1 2 4 6 8]
+                //index=3
+                var ids=data.allItems[type].map(function(current){
+                    return current.id;
+                });
+                index=ids.indexOf(id); 
+
+                if (index !==-1) {
+                    data.allItems[type].splice(index,1);
+                }
             },
 
             calculateBudget:function(){
@@ -66,7 +80,7 @@ var budgetController=(function(){
                 //calculate total income and expenses
                 claculateTotal('exp');
                 claculateTotal('inc');
-                
+                 
                 //calculate the budget: income-expnses
                 data.budget=data.totals.inc - data.totals.exp;
 
@@ -225,10 +239,10 @@ var controller=(function(budgetCtrl,UICtrl){
             //inc-1
             splitID=itemID.split('-');
             type=splitID[0];
-            ID=splitID[1]; 
+            ID=parseInt(splitID[1]); 
 
             //1. delete Item from data structure
-
+            budgetCtrl.deleteItem(type,ID)
             //2. delete item from UI
 
             //3.updae n show new budget
